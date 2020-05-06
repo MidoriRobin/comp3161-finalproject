@@ -1,13 +1,14 @@
 #----------------------------------------------------------------------------#
 # Imports
 #----------------------------------------------------------------------------#
-from app import app
+from app import app, db, classes
 from flask import Flask, render_template, request
 # from flask.ext.sqlalchemy import SQLAlchemy
 import logging
 from logging import Formatter, FileHandler
 from .forms import *
 import os
+from sqlalchemy.sql import text
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -48,6 +49,12 @@ def home():
 
 @app.route('/about')
 def about():
+
+    with db.connect() as conn:
+        s = text("SELECT * FROM usr")
+        result = conn.execute(s)
+        print(result.fetchone())
+
     return render_template('pages/placeholder.about.html')
 
 
