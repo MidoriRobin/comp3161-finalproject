@@ -44,3 +44,17 @@ body {
 code {
   font-size: 80%;
 }
+
+/*Admin style*/
+h2.admin{
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+form.portal-output{
+  width: 50%;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 10px 20px;
+  box-shadow: 1px 2px 3px grey;
+}
