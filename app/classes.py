@@ -1,15 +1,18 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from flask_login import UserMixin
 # from sqlalchemy import Column, Integer, String
-# from app import db
+from app import db
+from sqlalchemy import bindparam
+from sqlalchemy.sql import text
 
-engine = create_engine('sqlite:///database.db', echo=True)
-db_session = scoped_session(sessionmaker(autocommit=False,
-                                         autoflush=False,
-                                         bind=engine))
-Base = declarative_base()
-Base.query = db_session.query_property()
+#engine = create_engine('sqlite:///database.db', echo=True)
+#db_session = scoped_session(sessionmaker(autocommit=False,
+#                                         autoflush=False,
+#                                         bind=engine))
+#Base = declarative_base()
+#Base.query = db_session.query_property()
 
 # Set your classes here.
 
@@ -27,17 +30,17 @@ class User(Base):
         self.password = password
 '''
 
-class User():
+class User(UserMixin):
     """docstring for User."""
 
-    def __init__(self, uname, fname, lname, uid=None):
+    def __init__(self, uid, fname, lname, uname=None, password=None, age=None, birth=None, joined=None):
         self.uid = uid
-        self.username = username
-        self.firstname = firstname
-        self.lastname = lastname
+        self.username = uname
+        self.firstname = fname
+        self.lastname = lname
         self.age = age
         self.DOB = birth
-        self.password = None
+        self.password = password
         self.datejoined = joined
 
     def get_comment(self, postid):
@@ -49,8 +52,32 @@ class User():
     def set_pass(self, pname):
         pass
 
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        try:
+            return unicode(self.uid)  # python 2 support
+        except NameError:
+            return str(self.uid)  # python 3 support
+
+    @staticmethod
+    def get(id):
+        with db.connect() as conn:
+            stmt = text("SELECT * FROM usr WHERE usr.u_id LIKE :id")
+            stmt.bindparams(bindparam("id", type_=str))
+            result = conn.execute(stmt, {"id": id})
+
+        return result.fetchone()
+
     def __repr__(self):
-        return '<User %r>' %  self.fname
+        return '<User: %r>' %  self.firstname
 
 
 class Admin(User):
@@ -119,12 +146,15 @@ class FrontUser(User):
 class Post():
     """docstring for Post."""
 
-    def __init__(self, uid, content, date, pid=None):
+    def __init__(self, uid, content, date, pid=None, comments=[]):
 
         self.pid = pid
         self.uid = uid
         self.content = content
         self.date = date
+
+    def add_comment(self, pid, uid, comment, date):
+        return comments.append(comment(pid,uid,comment,date))
 
     def view_comments(self, arg):
         pass
@@ -165,12 +195,18 @@ class Profile():
         self.arg = arg
 
 
-class Comment(object):
+class Comment():
     """docstring for Comment."""
 
-    def __init__(self, arg):
+    def __init__(self, postid, uid, content, dateMade):
         super(Comment, self).__init__()
-        self.arg = arg
+        self.postID = postid
+        self.uId = uid
+        self.content = content
+        self.date = dateMade
+
+    def mname(self, arg):
+        pass
 
 
 
