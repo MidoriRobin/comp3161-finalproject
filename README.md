@@ -1,14 +1,15 @@
 
-#COMP3161 - Database Management Systems: Final project part II
+# COMP3161 - Database Management Systems: 
+## Final project part II
 
 
-###This part of the assignment consists of two parts:
+### This part of the assignment consists of two parts:
 
 The **first part** will be a document that will consist of the ER Diagram that was chosen as the best for the implementation of the application, the tables before normalization, the list of functional dependencies and the set of normalized tables. You should clearly indicate which keys are to be used asthe primary keys. Your normalized tables should be in at least 3NF, and where possible BCNF. Youshould also include a data dictionary, describing the intended meaning of the various tables andattribute names used in the tables.
 
 
 
-###The second part will be the application. The choice of front end is up to you. The requirements for the application are as follows:
+### The second part will be the application. The choice of front end is up to you. The requirements for the application are as follows:
 
 1. You should ensure that all the basic requirements from Assignment 1 are done.
 2.  You must use at least 3 stored procedures in your queries.
