@@ -34,5 +34,48 @@ a {
 /*****************************************************************************
  * Various other styles
  ****************************************************************************/
+.dash-main{
+  background-color: #e6e6ff;
+  padding-bottom: 30px;
+}
+ textarea.accept-post{
+   width:100%;
+   padding:5px 3px;
+   border-top: 2px solid blue;
+   margin-bottom:20px;
+ }
+
+ div.single-post{
+   box-shadow: 1px 2px 3px 2px #999966;
+   padding: 5px 10px;
+   display: flex;
+   height:150px;
+   margin-right: 20px;
+   margin-left: 20px;
+ }
+
+ div.single-post img{
+   padding-right:50px;
+ }
+
+ div.single-post p{
+   width:60%;
+   margin-right: auto;
+   margin-left: auto;
+ }
+
+ button.viewpost{
+   align-self: flex-end;
+ }
+
+ button.add-post{
+   border-radius: 3px;
+   color: white;
+   background-color: blue;
+   display: inline;
+   margin-bottom: 20px;
+ }
+
+
 
 /* Various other styles end */

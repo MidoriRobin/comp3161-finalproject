@@ -104,13 +104,10 @@ def profile():
 def admin():
     return render_template('layouts/admin.html')
 
-<<<<<<< HEAD
 @app.route('/edit')
 def edit():
     return render_template('layouts/editprofile.html')
 
-
-=======
 def verify_user(email, passw=None):
     print("verifying user..")
 
@@ -138,7 +135,6 @@ def verify_user(email, passw=None):
 @login_manager.user_loader
 def load_user(user_id):
     return User.get(user_id)
->>>>>>> 5fc54d7bad484472e9fb17c1df51e67f5cc92330
 
 # Error handlers.
 
