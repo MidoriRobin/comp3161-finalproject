@@ -43,7 +43,7 @@ def login_required(test):
 
 @app.route('/')
 def home():
-    return render_template('pages/placeholder.home.html')
+    return render_template('layouts/dash.html')
 
 
 @app.route('/about')
@@ -75,6 +75,11 @@ def profile():
 @app.route('/admin')
 def admin():
     return render_template('layouts/admin.html')
+
+@app.route('/edit')
+def edit():
+    return render_template('layouts/editprofile.html')
+
 
 
 # Error handlers.

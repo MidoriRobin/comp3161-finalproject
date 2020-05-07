@@ -1,0 +1,23 @@
+{% extends 'layouts/main.html' %}
+
+{% block content %}
+<h1 class="page-header">Dashboard</h1>
+<div class="dash-main">
+  <!-- Have the most recent posts of a user's friends -->
+  <div class="latest">
+    <textarea name="make-a-post" placeholder="What's on your mind..."></textarea>
+    <!-- single post to go here -->
+    <div class="single-post">
+   </div>
+  <div class="cards">
+    <div class="card" style="width: 18rem;">
+      <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
