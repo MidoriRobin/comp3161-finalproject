@@ -1,15 +1,18 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from flask_login import UserMixin
 # from sqlalchemy import Column, Integer, String
-# from app import db
+from app import db
+from sqlalchemy import bindparam
+from sqlalchemy.sql import text
 
-engine = create_engine('sqlite:///database.db', echo=True)
-db_session = scoped_session(sessionmaker(autocommit=False,
-                                         autoflush=False,
-                                         bind=engine))
-Base = declarative_base()
-Base.query = db_session.query_property()
+#engine = create_engine('sqlite:///database.db', echo=True)
+#db_session = scoped_session(sessionmaker(autocommit=False,
+#                                         autoflush=False,
+#                                         bind=engine))
+#Base = declarative_base()
+#Base.query = db_session.query_property()
 
 # Set your classes here.
 
@@ -27,34 +30,18 @@ class User(Base):
         self.password = password
 '''
 
-class User():
+class User(UserMixin):
     """docstring for User."""
 
-    def __init__(self, uid=None, uname, fname, lname, birth, pword):
+    def __init__(self, uid, fname, lname, uname=None, password=None, age=None, birth=None, joined=None):
         self.uid = uid
-        self.username = username
-        self.firstname = firstname
-        self.lastname = lastname
+        self.username = uname
+        self.firstname = fname
+        self.lastname = lname
         self.age = age
         self.DOB = birth
         self.password = password
         self.datejoined = joined
-
-    def get_posts(self):
-        """This fuction retrieves posts from the database
-
-        Using mySQL syntax, retrieves all the posts made by this user and stores
-        them in an array
-        """
-        pass
-
-    def get_comments(self):
-        """This function fetches every comment ever made by the user
-
-        Using mySQL syntax fetches all comments made by the user on the database
-        and stores them in an array
-        """
-        pass
 
     def get_comment(self, postid):
         pass
@@ -65,6 +52,33 @@ class User():
     def set_pass(self, pname):
         pass
 
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        try:
+            return unicode(self.uid)  # python 2 support
+        except NameError:
+            return str(self.uid)  # python 3 support
+
+    @staticmethod
+    def get(id):
+        with db.connect() as conn:
+            stmt = text("SELECT * FROM usr WHERE usr.u_id LIKE :id")
+            stmt.bindparams(bindparam("id", type_=str))
+            result = conn.execute(stmt, {"id": id})
+
+        return result.fetchone()
+
+    def __repr__(self):
+        return '<User: %r>' %  self.firstname
+
 
 class Admin(User):
     """docstring for Admin."""
@@ -72,21 +86,23 @@ class Admin(User):
     def __init__(self):
         super(Admin, self).__init__()
 
-    def fetch_all_users(self, firstname=None, lastname=None, datejoined):
+    def fetch_all_users(self, datejoined, firstname=None, lastname=None):
 
-        if name == None:
-            #A "Select *" query would go here
-            pass
-        elif :
         pass
 
-    def fetch_by_date(self, date):
+        #if name == None:
+        #    #A "Select *" query would go here
+        #    pass
+        #elif:
+        #    pass
+
+    def fetch_by_date(self, date, User=True, Posts=False):
         pass
 
-    def fetch_by_lname(self, arg):
+    def fetch_by_lname(self, lname):
         pass
 
-    def fetch_by_fname(self, arg):
+    def fetch_by_fname(self, fname):
         pass
 
     def fetch_all_posts(self, arg):
@@ -96,27 +112,58 @@ class Admin(User):
 class FrontUser(User):
     """docstring for FrontUser."""
 
-    def __init__(self, arg):
+    def __init__(self, dob, datejoined):
         super(FrontUser, self).__init__()
-        self.arg = arg
+        self.dob = dob
+        self.joindate = datejoined
+
+    def view_friends(self, arg):
+        pass
+
+    def add_friend(self, arg):
+        pass
+
+    def view_posts(self):
+        """This fuction retrieves posts from the database
+
+        Using mySQL syntax, retrieves all the posts made by this user and stores
+        them in an array
+        """
+        pass
+
+    def add_post(self, content, datemade):
+        pass
+
+    def get_comments(self):
+        """This function fetches every comment ever made by the user
+
+        Using mySQL syntax fetches all comments made by the user on the database
+        and stores them in an array
+        """
+        pass
 
 
-class Posts():
-    """docstring for Posts."""
+class Post():
+    """docstring for Post."""
 
-    def __init__(self, pid=None, uid, content, date):
+    def __init__(self, uid, content, date, pid=None, comments=[]):
 
         self.pid = pid
         self.uid = uid
         self.content = content
         self.date = date
 
+    def add_comment(self, pid, uid, comment, date):
+        return comments.append(comment(pid,uid,comment,date))
+
+    def view_comments(self, arg):
+        pass
 
 
 class BlogGroup(object):
     """docstring for BlogGroup."""
 
-    def __init__(self, bid=None, name, members=None, posts):
+    def __init__(self, name, posts, bid=None, members=None):
         super(BlogGroup, self).__init__()
         self.bid = bid
         self.bname = name
@@ -136,6 +183,9 @@ class BlogGroup(object):
     def add_member(self, arg):
         pass
 
+    def add_post(self, arg):
+        pass
+
 
 class Profile():
     """docstring for Profile."""
@@ -143,6 +193,22 @@ class Profile():
     def __init__(self, arg):
         super(Profile, self).__init__()
         self.arg = arg
+
+
+class Comment():
+    """docstring for Comment."""
+
+    def __init__(self, postid, uid, content, dateMade):
+        super(Comment, self).__init__()
+        self.postID = postid
+        self.uId = uid
+        self.content = content
+        self.date = dateMade
+
+    def mname(self, arg):
+        pass
+
+
 
 
 

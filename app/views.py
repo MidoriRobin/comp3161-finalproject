@@ -1,13 +1,17 @@
 #----------------------------------------------------------------------------#
 # Imports
 #----------------------------------------------------------------------------#
-from app import app
-from flask import Flask, render_template, request
+from app import app, db, login_manager
+from flask import Flask, render_template, request, redirect, url_for, flash
+from app.classes import *
 # from flask.ext.sqlalchemy import SQLAlchemy
 import logging
 from logging import Formatter, FileHandler
 from .forms import *
 import os
+from sqlalchemy import bindparam
+from sqlalchemy.sql import text
+from flask_login import login_user, logout_user, current_user, login_required
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -48,12 +52,36 @@ def home():
 
 @app.route('/about')
 def about():
+
+    with db.connect() as conn:
+        s = text("SELECT * FROM usr")
+        result = conn.execute(s)
+        print(result.fetchone())
+
     return render_template('pages/placeholder.about.html')
 
 
-@app.route('/login')
+@app.route('/login', methods=["GET", "POST"])
 def login():
-    form = LoginForm(request.form)
+    #form = LoginForm(request.form)
+    form = LoginForm()
+
+    if request.method == 'POST':
+        if form.name.data:
+            email = form.name.data
+
+            print("Printing verification")
+            print(verify_user(email))
+            id, lname, fname, email, date, password = verify_user(email)
+            user = User(id, fname, lname)
+            print(user)
+
+            if user is not None:
+                login_user(user)
+                flash('User logged in successfully!', 'success')
+                print("success!")
+
+            return redirect(url_for('about'))
     return render_template('forms/login.html', form=form)
 
 
@@ -76,11 +104,41 @@ def profile():
 def admin():
     return render_template('layouts/admin.html')
 
+<<<<<<< HEAD
 @app.route('/edit')
 def edit():
     return render_template('layouts/editprofile.html')
 
 
+=======
+def verify_user(email, passw=None):
+    print("verifying user..")
+
+    if passw == None:
+        with db.connect() as conn:
+            stmt = text("SELECT * FROM usr WHERE usr.email LIKE :e")
+            stmt.bindparams(bindparam("e", type_=str))
+            result = conn.execute(stmt, {"e": email})
+
+
+    elif passw != None:
+        with db.connect() as conn:
+            stmt = text("SELECT * FROM usr WHERE usr.email LIKE :e AND usr.password LIKE :passw")
+            stmt.bindparams(bindparam("e", type_=str),bindparam("passw", type_=str))
+            result = conn.execute(stmt, {"e": email, "passw": passw})
+            print("Done")
+    else:
+        result = None
+        print("Done")
+
+    print("verification complete!")
+    #print("Result is: %s", result.fetchone())
+    return result.fetchone()
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
+>>>>>>> 5fc54d7bad484472e9fb17c1df51e67f5cc92330
 
 # Error handlers.
 
