@@ -10,6 +10,7 @@
  ****************************************************************************/
 html {
   overflow-y: scroll;
+  font-family: sans-serif;
 }
 a {
   cursor: pointer;
@@ -34,47 +35,110 @@ a {
 /*****************************************************************************
  * Various other styles
  ****************************************************************************/
-.dash-main{
-  background-color: #e6e6ff;
-  padding-bottom: 30px;
+h1{
+  font-size: 150%;
 }
- textarea.accept-post{
-   width:100%;
-   padding:5px 3px;
-   border-top: 2px solid blue;
-   margin-bottom:20px;
- }
 
- div.single-post{
-   box-shadow: 1px 2px 3px 2px #999966;
-   padding: 5px 10px;
-   display: flex;
-   height:150px;
-   margin-right: 20px;
-   margin-left: 20px;
- }
+h4{
+  text-align: center;
+}
 
- div.single-post img{
-   padding-right:50px;
- }
+hr{
+  color: black;
+}
 
- div.single-post p{
-   width:60%;
-   margin-right: auto;
-   margin-left: auto;
- }
+.dash-main{
+  display: flex;
+}
 
- button.viewpost{
-   align-self: flex-end;
- }
+div.sidebar{
+  text-align: center;
+  padding: 5px 10px;
+  margin-top: 30px;
+  margin-left: 40px;
+  box-shadow: 1px 2px 3px #315A74;
+  width:50%;
+  height: auto;
 
- button.add-post{
-   border-radius: 3px;
-   color: white;
-   background-color: blue;
-   display: inline;
-   margin-bottom: 20px;
- }
+}
+
+.viewpost {
+  border-radius:5px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 20px;
+  color: black;
+  background-color: #2DD881;
+}
+
+textarea.accept-post{
+ margin-top: 30px;
+ resize:none;
+ width:100%;
+ height: 10%;
+ padding:5px 3px;
+ border-top: 8px solid #2DD881;
+ border-radius: 5px;
+}
+
+div.single-post{
+ border-top: 1px solid
+ padding: 5px 10px;
+ display: flex;
+ height:150px;
+ margin-right: 20px;
+ margin-left: 20px;
+ margin-bottom: 30px;
+}
+
+div.single-post img{
+ padding-right:50px;
+}
+
+div.single-post p{
+ width:60%;
+ margin-right: auto;
+ margin-left: auto;
+
+}
+
+button.viewpost{
+ align-self: flex-end;
+}
+
+button.add-post{
+ align-items: flex-end;
+ border-radius: 3px;
+ color: white;
+ background-color: blue;
+ display: inline;
+ margin-bottom: 20px;
+}
+
+.sky{
+  color: black;
+  height:200px;
+  background-image: url("/static/img/social.jpg");
+  background-size:contain;
+
+}
+
+
+
+.navbar-header a{
+  background-color: #140D4F;
+}
+
+.head{
+  background-color: #315A74;
+  color: white;
+  padding-top:  20px;
+  padding-bottom: 20px;
+}
+
+ul.nav.nav-bar li{
+  background-color: #2DD881;
+}
 
 
 

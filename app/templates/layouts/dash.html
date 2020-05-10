@@ -1,14 +1,24 @@
+
 {% extends 'layouts/main.html' %}
 
 {% block content %}
-<h1 class="page-header">Dashboard</h1>
+
+<div class="sky">
+  <h1 class="splash">Welcome back!</h1>
+</div>
+
 <div class="dash-main">
   <!-- Have the most recent posts of a user's friends -->
   <div class="latest">
-    <textarea class="accept-post" name="make-a-post" placeholder="What's on your mind..."></textarea>
-    <button type="button" name="button" class="add-post">Add Post</button>
+    <div class="share-post">
+      <textarea class="accept-post" name="make-a-post" placeholder="What's on your mind..."></textarea>
+      <button type="button" name="button" class="add-post">Add Post</button>
+    </div>
+
     <!-- single post to go here -->
-    <h4>See the latest posts from your friends!</h4>
+    <hr>
+    <h4 class="head">Recents</h4>
+    <hr>
     <div class="single-post">
       <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus felis, rutrum at mauris at, fermentum consectetur nisi. Vivamus semper molestie orci, at porta nisl mollis quis. Pellentesque ac risus magna. Ut scelerisque sapien pellentesque, venenatis turpis ac, posuere ipsum.
@@ -16,6 +26,34 @@
          Nunc ultrices ac erat sit amet tincidunt.</p>
       <button type="button" name="button" class="viewpost">View Post</button>
    </div>
+   <div class="single-post">
+     <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
+     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus felis, rutrum at mauris at, fermentum consectetur nisi. Vivamus semper molestie orci, at porta nisl mollis quis. Pellentesque ac risus magna. Ut scelerisque sapien pellentesque, venenatis turpis ac, posuere ipsum.
+       Ut quis posuere ligula. Nam at porta mi. Donec sed suscipit metus. Nulla tincidunt dui at tortor gravida, at consequat justo congue.
+        Nunc ultrices ac erat sit amet tincidunt.</p>
+     <button type="button" name="button" class="viewpost">View Post</button>
+  </div>
+  <div class="single-post">
+    <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus felis, rutrum at mauris at, fermentum consectetur nisi. Vivamus semper molestie orci, at porta nisl mollis quis. Pellentesque ac risus magna. Ut scelerisque sapien pellentesque, venenatis turpis ac, posuere ipsum.
+      Ut quis posuere ligula. Nam at porta mi. Donec sed suscipit metus. Nulla tincidunt dui at tortor gravida, at consequat justo congue.
+       Nunc ultrices ac erat sit amet tincidunt.</p>
+    <button type="button" name="button" class="viewpost">View Post</button>
+ </div>
+ <div class="single-post">
+   <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
+   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus felis, rutrum at mauris at, fermentum consectetur nisi. Vivamus semper molestie orci, at porta nisl mollis quis. Pellentesque ac risus magna. Ut scelerisque sapien pellentesque, venenatis turpis ac, posuere ipsum.
+     Ut quis posuere ligula. Nam at porta mi. Donec sed suscipit metus. Nulla tincidunt dui at tortor gravida, at consequat justo congue.
+      Nunc ultrices ac erat sit amet tincidunt.</p>
+   <button type="button" name="button" class="viewpost">View Post</button>
+</div>
+<div class="single-post">
+  <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus felis, rutrum at mauris at, fermentum consectetur nisi. Vivamus semper molestie orci, at porta nisl mollis quis. Pellentesque ac risus magna. Ut scelerisque sapien pellentesque, venenatis turpis ac, posuere ipsum.
+    Ut quis posuere ligula. Nam at porta mi. Donec sed suscipit metus. Nulla tincidunt dui at tortor gravida, at consequat justo congue.
+     Nunc ultrices ac erat sit amet tincidunt.</p>
+  <button type="button" name="button" class="viewpost">View Post</button>
+</div>
    <!--
   <div class="cards">
     <div class="card" style="width: 18rem;">
@@ -28,5 +66,16 @@
     </div>
   </div>-->
 </div>
+<div class="sidebar head">
+  <h1>Friends</h1>
+  <hr>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec tellus euismod, porttitor tortor sit amet, mattis ipsum.
+     Cras sollicitudin vitae risus non dictum. Donec nunc est, fringilla vel justo at, efficitur molestie odio.
+     Aenean dolor nisl, sodales vitae dui eget, viverra ornare ipsum. Integer tristique justo eu odio venenatis, vitae pharetra purus ornare. Vivamus fermentum molestie leo, vitae ullamcorper risus.
+     Nulla posuere enim blandit metus sodales ultricies. Nullam facilisis purus eu placerat iaculis. Ut imperdiet consectetur enim sodales lobortis. Curabitur vitae ante in diam mattis mollis.
+     Proin luctus congue pulvinar. </p>
+
 </div>
+</div>
+
 {% endblock %}
