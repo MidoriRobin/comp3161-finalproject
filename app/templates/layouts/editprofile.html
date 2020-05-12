@@ -1,11 +1,11 @@
 {% extends 'layouts/main.html' %}
 
 {% block content %}
-<div class="edit-head">
-  <h2>Edit Profile</h2>
-</div>
+
+
 <div class="edit-prfile">
   <div class="sidebar-left">
+    <h2>Profile Info</h2>
     <div class="">
       <!--Allow user to edit their current profile-->
       <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
@@ -16,21 +16,28 @@
     </div>
     <div class="friends">
       <h4>Add Friends</h4>
-      <hr>
-      <h4>Remove Friend</h4>
+      <em>display friends to be added</em>
     </div>
   </div>
   <div class="edits">
     <!-- placeholder should include current values such as current email, current first name last name-->
     <!-- can be edited using jing=ja templating-->
-    <label for="username">Username</label>
+    <h2>Edit Profile</h2>
+
+    <label for="username">Username:</label>
     <input type="text" name="username" value="" placeholder="Johnny Boy">
 
-    <label for="email">Email</label>
+    <label for="email">Email:</label>
     <input type="text" name="email" value="">
 
-    <label for="firstname"></label>
-    <input type="text" name="" value="">
+    <label for="firstname">Firstname: </label>
+    <input type="text" name="firstname" value="">
+
+    <div class="changeprofile">
+      <!--Need another way to implement choosing profile picture-->
+      <label for="profilepic">Edit Profile Photo: </label>
+      <input type="file" name="profilepic" value="">
+    </div>
 
     <button type="button" name="button">Save Changes</button>
     <button type="button" name="button">Cancel</button>

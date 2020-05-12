@@ -134,6 +134,7 @@ button.add-post{
 }
 
 .biographic{
+  margin-top: 0;
   width:40%;
 }
 
@@ -245,6 +246,7 @@ button.comment-button{
 /*styles for editprofile*/
 .edit-prfile{
   display: flex;
+  height: 100%;
 }
 
 .sidebar-left{
@@ -252,21 +254,73 @@ button.comment-button{
 }
 
 .sidebar-left{
-  width:30%;
+  width:25%;
+  height: 100%;
+  margin-right: 30px;
+  background-color:#6EDFB7;
+  padding: 5px 10px;
+  border-radius: 5px;
+  align-content: center;
+  color: #140D4F;
+  font-weight: bold;
+
 }
 
-label,
-input{
+.sidebar-left h2{
+  text-align: center;
+  font-size: 160%;
+  font-weight: bold;
+  border-bottom: 1px solid #140D4F
+}
+
+.edits label,
+.edits input{
   display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+
 }
 
-input{
-  width:100%;
+div.edits{
+  width:70%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
 }
+
+
+.edits input{
+  width:100%;
+  height:40px;
+  padding-left: 5px;
+
+}
+
+.edits h2{
+  text-align: center;
+  font-weight: bold;
+  font-size: 200%;
+  border-bottom: 1px solid #140D4F;
+}
+
+.edits button{
+  margin-top:10px;
+}
+
+.edits .changeprofile{
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background-color: #140D4F;
+  color: white;
+  padding: 5px 5px;
+}
+
+
 
 
 .friends h4{
   background-color: #140D4F;
+  text-align: center;
   color: white;
   font-weight: bolder;
 }
