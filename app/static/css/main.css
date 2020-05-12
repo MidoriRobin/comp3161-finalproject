@@ -10,7 +10,7 @@
  ****************************************************************************/
 html {
   overflow-y: scroll;
-  font-family: sans-serif;
+  font-family:sans-serif;
 }
 a {
   cursor: pointer;
@@ -39,13 +39,6 @@ h1{
   font-size: 150%;
 }
 
-h4{
-  text-align: center;
-}
-
-hr{
-  color: black;
-}
 
 .dash-main{
   display: flex;
@@ -123,22 +116,230 @@ button.add-post{
 
 }
 
+.profile-container{
+  display: inline-flex;
+  background-color: #4EA699;
+  width:100%;
+  flex-flow: row;
+  padding-top:10px;
+  color: #140D4F;
 
-
-.navbar-header a{
-  background-color: #140D4F;
 }
 
+.pro-info.left{
+  display: block;
+  padding-left: 30px;
+  margin-left: 20px;
+  width:30%;
+}
+
+.biographic{
+  margin-top: 0;
+  width:40%;
+}
+
+button.follow{
+  margin-top: 10px;
+  align-self: flex-end;
+  display: block;
+  width: 100%;
+}
+
+.follow-info{
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/*ul.nav.navbar-nav li{
+  background-color: #140D4F;
+}*/
+
 .head{
+  font-size: 130%;
   background-color: #315A74;
   color: white;
   padding-top:  20px;
   padding-bottom: 20px;
 }
 
-ul.nav.nav-bar li{
-  background-color: #2DD881;
+img.mock{
+  border-radius: 50%;
 }
+
+.your-posts{
+  width:75%;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow:  1px 2px 2px 3px #CAD2C5;
+  margin-top: 2px;
+  padding-top:10px;
+  padding-bottom: 20px;
+}
+
+.your-posts-heading{
+  text-align:center;
+  border-bottom: 2px solid white;
+  margin-bottom:10px;
+}
+
+.comments ul li{
+  align-self: flex-end;
+}
+/********************************/
+
+/*styles for post*/
+.posts{
+  margin-top: 15px;
+  padding-top: 5px;
+  padding-left:10px;
+  padding-right:8px;
+  border-top: 4px solid #4EA699;
+  border-radius: 5px;
+}
+.user{
+  height:70px;
+}
+
+.user span{
+  display: inline-block;
+  margin-right:8px;
+}
+
+.comments{
+  padding-top: 10px;
+  margin-left: 40px;
+}
+
+.single-comment p{
+  display:inline-block;
+}
+
+.single-comment{
+  margin-bottom: 15px;
+  border-bottom: 1px solid #140D4F;
+  padding-bottom: 5px;
+}
+
+em{
+  margin-bottom: 8px;
+  align-self:center;
+}
+
+em h4{
+  text-align: center;
+}
+
+textarea.accept-comment{
+  padding-top: 10px;
+  resize:none;
+  padding-left: 10px;
+  height:80px;
+  width:100%;
+}
+
+button.comment-button{
+  margin-bottom: 30px;
+}
+/*end of styles for post*/
+/********************************/
+
+/*styles for editprofile*/
+.edit-prfile{
+  display: flex;
+  height: 100%;
+}
+
+.sidebar-left{
+  width:30%;
+}
+
+.sidebar-left{
+  width:25%;
+  height: 100%;
+  margin-right: 30px;
+  background-color:#6EDFB7;
+  padding: 5px 10px;
+  border-radius: 5px;
+  align-content: center;
+  color: #140D4F;
+  font-weight: bold;
+
+}
+
+.sidebar-left h2{
+  text-align: center;
+  font-size: 160%;
+  font-weight: bold;
+  border-bottom: 1px solid #140D4F
+}
+
+.edits label,
+.edits input{
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+
+}
+
+div.edits{
+  width:70%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
+}
+
+
+.edits input{
+  width:100%;
+  height:40px;
+  padding-left: 5px;
+
+}
+
+.edits h2{
+  text-align: center;
+  font-weight: bold;
+  font-size: 200%;
+  border-bottom: 1px solid #140D4F;
+}
+
+.edits button{
+  margin-top:10px;
+}
+
+.edits .changeprofile{
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background-color: #140D4F;
+  color: white;
+  padding: 5px 5px;
+}
+
+
+
+
+.friends h4{
+  background-color: #140D4F;
+  text-align: center;
+  color: white;
+  font-weight: bolder;
+}
+
+
+
+/*end of styles for edit profile*/
+/********************************/
+
+
+
+
+
+
+
+
+
+
+
 
 
 

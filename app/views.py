@@ -109,6 +109,14 @@ def admin():
 def edit():
     return render_template('layouts/editprofile.html')
 
+@app.route('/post')
+def post():
+    return render_template('layouts/post.html')
+
+
+    #render the page with the selected post using the post id
+
+
 def verify_user(email, passw=None):
     print("verifying user..")
 
