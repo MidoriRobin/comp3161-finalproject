@@ -2,25 +2,51 @@
 {% block title %} Profile {% endblock %}
 
 {% block content %}
-<h2 class="page-header">Profile</h2>
+<!--<h2 class="page-header">Profile</h2>-->
 
+<h1>Your Profile</h1>
 <div class="profile-container">
-  <div class="proinfo">
-    <a href="https://placeholder.com"><img src="https://via.placeholder.com/150" alt="profile-pic"></a>
-    <h3 class="bio">Bio</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce volutpat tellus sed lectus mollis ultricies.
-      Vivamus dictum velit eget nulla euismod sollicitudin. Etiam ut nisl commodo, blandit ipsum eget, convallis tortor. Cras id ex tellus.
-      Pellentesque eu pellentesque lectus. Sed finibus purus orci, semper pretium orci dapibus eu. Praesent eu cursus orci.
-       Curabitur placerat blandit mi, sit amet pellentesque sem vulputate sit amet. Nunc ac lectus egestas,
-       cursus metus eget, semper tortor. </p>
-    
-    <button type="button" name="button" class="edit-profile">Edit Profile</button>
-  </div>
-  <hr>
-  <div class="seeposts">
-    <p>Friends recent posts here</p>
-    <img src="" alt="profile image">
-    <button type="button" name="button">View All</button>
-  </div>
+
+    <div class="pro-info left">
+      <img src="https://via.placeholder.com/150" alt="profile photo" class="mock">
+    </div>
+    <div class="biographic">
+      <h3>John Doe</h3>
+      <h4>peopleprofile@example.com </h4>
+      <h4>Bio</h4>
+      <p>Profile description here - Donec sed suscipit metus. Nulla tincidunt dui at tortor gravida, at consequat justo congue.
+       Nunc ultrices ac erat sit amet tincidunt.</p>
+    </div>
+    <div class="follow-info">
+      <table class="follo">
+        <tr>
+          <td>80</td>
+          <td>100</td>
+        </tr>
+        <tr>
+          <th>Followers</th>
+          <th>Following</th>
+        </tr>
+      </table>
+      <button type="button" name="button" class="follow">Follow</button>
+    </div>
 </div>
+<div class="your-posts">
+  <div class="your-posts-heading">
+    <h4>Your Posts</h4>
+  </div>
+  <div class="post">
+    <div class="single-post">
+      <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus felis, rutrum at mauris at, fermentum consectetur nisi. Vivamus semper molestie orci, at porta nisl mollis quis. Pellentesque ac risus magna. Ut scelerisque sapien pellentesque, venenatis turpis ac, posuere ipsum.
+        Ut quis posuere ligula. Nam at porta mi. Donec sed suscipit metus. Nulla tincidunt dui at tortor gravida, at consequat justo congue.
+         Nunc ultrices ac erat sit amet tincidunt.<span><a href="#">View Comments</a></span></p>
+
+      <button type="button" name="button" class="viewpost">View Post</button>
+      <hr>
+
+    </div>
+   </div>
+  </div>
+
 {% endblock %}

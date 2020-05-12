@@ -1,15 +1,43 @@
 {% extends 'layouts/main.html' %}
 
 {% block content %}
-<div class="page-header">
+<div class="edit-head">
   <h2>Edit Profile</h2>
 </div>
-<!-- Will contain the options for the user to edit their profile -->
-<div class="edit-options">
-  <ul class="edit-profile">
-    <li><a href="#">Change Profile Photo</a></li>
-    <li><a href="#">View All Photos</a></li>
-  </ul>
+<div class="edit-prfile">
+  <div class="sidebar-left">
+    <div class="">
+      <!--Allow user to edit their current profile-->
+      <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
+      <p>Username</p>
+      <p>first name</p>
+      <p>lastname</p>
+      <p>date joined</p>
+    </div>
+    <div class="friends">
+      <h4>Add Friends</h4>
+      <hr>
+      <h4>Remove Friend</h4>
+    </div>
+  </div>
+  <div class="edits">
+    <!-- placeholder should include current values such as current email, current first name last name-->
+    <!-- can be edited using jing=ja templating-->
+    <label for="username">Username</label>
+    <input type="text" name="username" value="" placeholder="Johnny Boy">
+
+    <label for="email">Email</label>
+    <input type="text" name="email" value="">
+
+    <label for="firstname"></label>
+    <input type="text" name="" value="">
+
+    <button type="button" name="button">Save Changes</button>
+    <button type="button" name="button">Cancel</button>
+  </div>
 </div>
+
+<!-- Will contain the options for the user to edit their profile -->
+
 
 {% endblock %}
