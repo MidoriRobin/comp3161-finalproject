@@ -16,24 +16,10 @@ from sqlalchemy.sql import text
 
 # Set your classes here.
 
-'''
-class User(Base):
-    __tablename__ = 'Users'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=True)
-    email = db.Column(db.String(120), unique=True)
-    password = db.Column(db.String(30))
-
-    def __init__(self, name=None, password=None):
-        self.name = name
-        self.password = password
-'''
-
 class User(UserMixin):
     """docstring for User."""
 
-    def __init__(self, uid, fname, lname, uname=None, password=None, age=None, birth=None, joined=None):
+    def __init__(self, uid, fname, lname, password=None, birth=None):
         self.uid = uid
         self.username = uname
         self.firstname = fname
@@ -41,15 +27,44 @@ class User(UserMixin):
         self.age = age
         self.DOB = birth
         self.password = password
-        self.datejoined = joined
 
+
+    # Might not be necessary here, better placed in comment class?
     def get_comment(self, postid):
         pass
 
-    def set_uname(self, nname):
+    # Needs an update query
+    def set_uname(self, newname):
+        """This allows for the rewriting of the username of the user.
+
+            Allows the user to change their username and carries over all changes
+            from the front end to the database.
+        """
+
+        self.username = newname
+
+        with db.connect() as conn:
+            # The SQL query goes in the text functon below
+            # stmt = text()
+            stmt.bindparams(bindparam("name", type_=str))
+            result = conn.execute()
         pass
 
+    # Also needs an update query
     def set_pass(self, pname):
+        """This allows for the rewriting of the passoword of the user.
+
+            Allows the user to change their passoword and carries over all changes
+            from the front end to the database.
+        """
+
+        self.password = pname
+
+        with db.connect() as conn:
+            # The SQL query goes in the text functon below
+            # stmt = text()
+            stmt.bindparams(bindparam("pass", type_=str))
+            result = conn.execute()
         pass
 
     def is_authenticated(self):
@@ -80,6 +95,49 @@ class User(UserMixin):
         return '<User: %r>' %  self.firstname
 
 
+class Profile(object):
+    """docstring for Profile: An object to store users information regarding their Profile
+
+        """
+
+    def __init__(self, p_id, uname, p_pic, bio, u_name, num_of_friends):
+        super(Profile, self).__init__()
+
+        self.profileId = p_id
+        self.username = uname
+        self.profilePic = p_pic
+        self.biography = bio
+        self.userName = u_name
+        self.NoF = num_of_friends
+
+    def set_picture(self, picture):
+        """Allows the user to reset their profile picture.
+
+            Changes the profile picture of the user
+            and carries over all changes to the database
+        """
+
+        pass
+
+    def inc_friend(self, arg):
+        self.NoF = self.NoF + 1
+
+    def edit_bio(self, about):
+        self.biography = about
+
+    def set_uname(self, nname):
+        """This allows for the rewriting of the username of the user.
+
+            Allows the user to change their username and carries over all changes
+            from the front end to the database.
+        """
+
+        pass
+
+    def mname(self, arg):
+        pass
+
+
 class Admin(User):
     """docstring for Admin."""
 
@@ -97,12 +155,24 @@ class Admin(User):
         #    pass
 
     def fetch_by_date(self, date, User=True, Posts=False):
+        with db.connect() as conn:
+            s = text("SELECT `u_id`, `lname`, `fname` FROM `usr`"
+            "WHERE u_id BETWEEN 100000 AND 200000")
+            result = conn.execute(s)
         pass
 
     def fetch_by_lname(self, lname):
+
+        with db.connect() as conn:
+            s = text("SELECT * FROM `usr`"
+            "WHERE u_id BETWEEN 100000 AND 200000")
+            result = conn.execute(s)
         pass
 
     def fetch_by_fname(self, fname):
+        pass
+
+    def fetch_by_uname(self, arg):
         pass
 
     def fetch_all_posts(self, arg):
@@ -116,22 +186,59 @@ class FrontUser(User):
         super(FrontUser, self).__init__()
         self.dob = dob
         self.joindate = datejoined
+        self.postLst = []
 
-    def view_friends(self, arg):
-        pass
+    def view_friends(self):
+        """Allows user to view all friends
 
-    def add_friend(self, arg):
-        pass
-
-    def view_posts(self):
-        """This fuction retrieves posts from the database
-
-        Using mySQL syntax, retrieves all the posts made by this user and stores
-        them in an array
+            Makes a query to the database and fetches a list of friends,
+            listing only ID and First and Last name
         """
+        with db.connect() as conn:
+            # The SQL query goes in the text functon below
+            # stmt = text()
+            stmt.bindparams(bindparam("id", type_=str))
+            result = conn.execute()
         pass
+
+    def add_friend(self, friendid):
+        """Allows the user to add another user to thier friends list
+
+            Adds another user to this user's list of friends,
+            also makes a SQL insert, so changes are maintained on the database
+        """
+
+        with db.connect() as conn:
+            # The SQL query goes in the text functon below
+            # stmt = text()
+            stmt.bindparams(bindparam("id", type_=str))
+            result = conn.execute()
+        pass
+
+    def fetch_posts(self):
+        """This fuction retrieves posts from the database.
+
+            Using mySQL syntax, retrieves all the posts made by this user and stores
+            them in an array.
+        """
+        with db.connect() as conn:
+            # The SQL query goes in the text functon below
+            # stmt = text()
+            stmt.bindparams(bindparam("id", type_=str))
+            result = conn.execute()
+        return
 
     def add_post(self, content, datemade):
+        """Allows the user to create a new post, and adds it to their list of posts.
+
+            Upon creation of a new post, this post is added to the database
+            via an insert statement, so changes are reflected
+        """
+        with db.connect() as conn:
+            # The SQL query goes in the text functon below
+            # stmt = text()
+            stmt.bindparams(bindparam("id", type_=str))
+            result = conn.execute()
         pass
 
     def get_comments(self):
@@ -146,18 +253,36 @@ class FrontUser(User):
 class Post():
     """docstring for Post."""
 
-    def __init__(self, uid, content, date, pid=None, comments=[]):
+    def __init__(self, uid, content, date, pid=None, comments=[], likes=0):
 
         self.pid = pid
         self.uid = uid
         self.content = content
         self.date = date
+        self.commentLst = comments
+        self.likes = likes
+
+    def view_comments(self):
+
+        with db.connect() as conn:
+            # The SQL query goes in the text functon below
+            # stmt = text()
+            stmt.bindparams(bindparam("id", type_=str))
+            result = conn.execute()
+        pass
+
+    def incr_likes(self):
+
+        with db.connect() as conn:
+            # The SQL query goes in the text functon below
+            # stmt = text()
+            stmt.bindparams(bindparam("id", type_=str))
+            result = conn.execute()
+
+        self.likes += 1
 
     def add_comment(self, pid, uid, comment, date):
         return comments.append(comment(pid,uid,comment,date))
-
-    def view_comments(self, arg):
-        pass
 
 
 class BlogGroup(object):
@@ -175,6 +300,12 @@ class BlogGroup(object):
         pass
 
     def list_posts(self):
+
+        with db.connect() as conn:
+            # The SQL query goes in the text functon below
+            # stmt = text()
+            stmt.bindparams(bindparam("id", type_=str))
+            result = conn.execute()
         pass
 
     def add_editor(self, arg):
