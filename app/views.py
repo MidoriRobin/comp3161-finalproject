@@ -54,9 +54,10 @@ def home():
 def about():
 
     with db.connect() as conn:
-        s = text("SELECT * FROM usr")
+        s = text("SELECT `u_id`, `lname`, `fname` FROM `usr`"
+        "WHERE u_id BETWEEN 100000 AND 200000")
         result = conn.execute(s)
-        print(result.fetchone())
+        print(result.fetchmany(5))
 
     return render_template('pages/placeholder.about.html')
 
@@ -128,7 +129,8 @@ def verify_user(email, passw=None):
 
     elif passw != None:
         with db.connect() as conn:
-            stmt = text("SELECT * FROM usr WHERE usr.email LIKE :e AND usr.password LIKE :passw")
+            stmt = text("SELECT * FROM usr WHERE usr.email"
+            "LIKE :e AND usr.password LIKE :passw")
             stmt.bindparams(bindparam("e", type_=str),bindparam("passw", type_=str))
             result = conn.execute(stmt, {"e": email, "passw": passw})
             print("Done")
