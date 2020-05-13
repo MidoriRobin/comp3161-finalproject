@@ -12,34 +12,8 @@ import os
 from sqlalchemy import bindparam
 from sqlalchemy.sql import text
 from flask_login import login_user, logout_user, current_user, login_required
+from datetime import date
 
-#----------------------------------------------------------------------------#
-# App Config.
-#----------------------------------------------------------------------------#
-
-#app = Flask(__name__)
-#app.config.from_object('config')
-#db = SQLAlchemy(app)
-
-# Automatically tear down SQLAlchemy.
-'''
-@app.teardown_request
-def shutdown_session(exception=None):
-    db_session.remove()
-'''
-
-# Login required decorator.
-'''
-def login_required(test):
-    @wraps(test)
-    def wrap(*args, **kwargs):
-        if 'logged_in' in session:
-            return test(*args, **kwargs)
-        else:
-            flash('You need to login first.')
-            return redirect(url_for('login'))
-    return wrap
-'''
 #----------------------------------------------------------------------------#
 # Controllers.
 #----------------------------------------------------------------------------#
@@ -53,11 +27,21 @@ def home():
 @app.route('/about')
 def about():
 
-    with db.connect() as conn:
-        s = text("SELECT `u_id`, `lname`, `fname` FROM `usr`"
+    """with db.connect() as conn:
+        s = text("SELECT * FROM `usr`"
         "WHERE u_id BETWEEN 100000 AND 200000")
         result = conn.execute(s)
-        print(result.fetchmany(5))
+        print(result.fetchmany(5))"""
+
+    with  db.connect() as connection:
+        nconn = connection.connection
+        cursor = nconn.cursor()
+        cursor.callproc("GetPostComments", ['1'])
+        results = list(cursor.fetchall())
+        cursor.close()
+        nconn.commit()
+
+    print(results)
 
     return render_template('pages/placeholder.about.html')
 
@@ -101,9 +85,51 @@ def forgot():
 def profile():
     return render_template('layouts/profile.html')
 
-@app.route('/admin')
+@app.route('/admin', methods=["GET"])
 def admin():
-    return render_template('layouts/admin.html')
+    usrttl = 0
+    pstttl = 0
+    txtttl = 0
+    pttl = 0
+    metric = []
+
+    with db.connect() as conn:
+        stmt1 = text("SELECT COUNT(u_id) from usr")
+        stmt2 = text("SELECT COUNT(post_id) from post")
+        stmt3 =text("SELECT COUNT(photo_id) from photo;")
+        stmt4 =text("SELECT COUNT(t_id) from p_text")
+
+        stList = [stmt1,stmt2,stmt3,stmt4]
+
+        for stmt in stList:
+            result =conn.execute(stmt)
+            metric.append(result.fetchone())
+        print(metric)
+
+    return render_template('layouts/admin.html', metrics=metric)
+
+@app.route('/admin/<userName>', methods=["GET","POST"])
+def show_user(userName):
+
+    with db.connect() as conn:
+        stmt = text("SELECT usr.* FROM `usr` "
+        "JOIN register ON usr.u_id=register.u_id "
+        "JOIN prfl ON register.p_id=prfl.p_id "
+        "WHERE prfl.u_name LIKE :uname")
+        stmt.bindparams(bindparam("uname", type_=str))
+        result = conn.execute(stmt, {"uname": userName})
+        userArrays = result.fetchall()
+    print(len(userArrays))
+
+    users = []
+
+    for user in userArrays:
+        id, lname, fname, email, dobirth, passw = user
+        nUser = User(id, lname, fname, email, birth=dobirth)
+        users.append(nUser)
+
+    return render_template('layouts/admin-user.html', Users=users)
+
 
 @app.route('/edit')
 def edit():
