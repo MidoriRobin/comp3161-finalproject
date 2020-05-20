@@ -335,6 +335,69 @@ div.edits{
 /*end of styles for edit profile*/
 /********************************/
 
+/*********************styles for first page user will see**********************/
+.noted{
+  display: flex;
+  margin-top: 100px;
+  width: 1050px;
+  height:350px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.displaypic{
+  margin-right: 8px;
+  width:50%;
+  height:100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.displaypic img{
+  width:100%;
+  height:100%;
+  background-color: yellow;
+}
+
+
+.log-sign{
+  background-color: #6edfb7;
+  padding: 10px 10px;
+  width:50%;
+  font-size: 140%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.log-sign h2{
+  text-align: center;
+  color: #140d4f;
+  letter-spacing: 2px;
+}
+
+.log-sign button{
+  margin-top: 40px;
+  radius:5px;
+  width:49%;
+  border-radius: 10px;
+  height:50px;
+  font-size: 70%;
+}
+
+.admin-sign{
+  margin-top: 80px;
+  font-size: 80%;
+  margin-left: 10px;
+}
+
+.btns{
+  width:100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btns button:hover{
+  background-color:#ca1551;
+}
+
 
 
 

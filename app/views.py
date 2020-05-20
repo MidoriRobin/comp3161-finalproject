@@ -23,6 +23,10 @@ from datetime import date
 def home():
     return render_template('layouts/dash.html')
 
+@app.route('/firstpage')
+def firstpage():
+    return render_template('layouts/first.html')
+
 
 @app.route('/about')
 def about():
