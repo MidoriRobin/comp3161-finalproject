@@ -5,6 +5,7 @@
 <!--<h2 class="page-header">Profile</h2>-->
 
 <h1>Your Profile</h1>
+{% if result == '' %}
 <div class="profile-container">
 
     <div class="pro-info left">
@@ -31,6 +32,7 @@
       <button type="button" name="button" class="follow">Follow</button>
     </div>
 </div>
+
 <div class="your-posts">
   <div class="your-posts-heading">
     <h4>Your Posts</h4>
@@ -48,5 +50,61 @@
     </div>
    </div>
   </div>
+{% else %}
+<div class="profile-container">
 
+    <div class="pro-info left">
+      <img src="https://via.placeholder.com/150" alt="profile photo" class="mock">
+    </div>
+    <div class="biographic">
+      <h3>{{result['fname']}} {{result['lname']}} - <i>{{result['u_name']}}</i></h3>
+      <h4>{{result['email']}} </h4>
+      <h4>Bio</h4>
+      <p>{{result['bio']}}</p>
+    </div>
+    <div class="follow-info">
+      <table class="follo">
+        <tr>
+          <td>{{result['num_of_friends']}}</td>
+        </tr>
+        <tr>
+          <th>Friends</th>
+        </tr>
+      </table>
+      <button type="button" name="button" class="follow">Add friend</button>
+    </div>
+</div>
+
+<div class="your-posts">
+  <div class="your-posts-heading">
+    <h4>Your Posts</h4>
+  </div>
+
+  {% if posts == '' %}
+  <div class="post">
+    <div class="single-post">
+      <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus felis, rutrum at mauris at, fermentum consectetur nisi. Vivamus semper molestie orci, at porta nisl mollis quis. Pellentesque ac risus magna. Ut scelerisque sapien pellentesque, venenatis turpis ac, posuere ipsum.
+        Ut quis posuere ligula. Nam at porta mi. Donec sed suscipit metus. Nulla tincidunt dui at tortor gravida, at consequat justo congue.
+         Nunc ultrices ac erat sit amet tincidunt.<span><a href="#">View Comments</a></span></p>
+
+      <button type="button" name="button" class="viewpost">View Post</button>
+      <hr>
+
+    </div>
+   </div>
+   {% else %}
+   {% for post in posts %}
+   <div class="post">
+     <div class="single-post">
+       <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
+       <p>{{post['content']}}<span><a href="#">View Comments</a></span></p>
+       <button type="button" name="button" class="viewpost">View Post</button>
+       <hr>
+     </div>
+    </div>
+    {% endfor %}
+   {% endif %}
+  </div>
+{% endif %}
 {% endblock %}

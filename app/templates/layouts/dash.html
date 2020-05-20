@@ -14,17 +14,31 @@
       <textarea class="accept-post" name="make-a-post" placeholder="What's on your mind..."></textarea>
       <button type="submit" name="button" class="add-post">Add Post</button>
 
-
+    {% if posts == '' %}
     <!-- single post to go here -->
     <hr>
     <h4 class="head">Recents</h4>
     <hr>
+      <div class="single-post">
+        <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus felis, rutrum at mauris at, fermentum consectetur nisi. Vivamus semper molestie orci, at porta nisl mollis quis. Pellentesque ac risus magna. Ut scelerisque sapien pellentesque, venenatis turpis ac, posuere ipsum.
+          Ut quis posuere ligula. Nam at porta mi. Donec sed suscipit metus. Nulla tincidunt dui at tortor gravida, at consequat justo congue.
+           Nunc ultrices ac erat sit amet tincidunt.</p>
+        <button type="button" name="button" class="viewpost" onclick="window.location.href='{{ url_for('post')}}'">View Post</button>
+     </div>
+     <div class="single-post">
+       <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
+       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus felis, rutrum at mauris at, fermentum consectetur nisi. Vivamus semper molestie orci, at porta nisl mollis quis. Pellentesque ac risus magna. Ut scelerisque sapien pellentesque, venenatis turpis ac, posuere ipsum.
+         Ut quis posuere ligula. Nam at porta mi. Donec sed suscipit metus. Nulla tincidunt dui at tortor gravida, at consequat justo congue.
+          Nunc ultrices ac erat sit amet tincidunt.</p>
+       <button type="button" name="button" class="viewpost">View Post</button>
+    </div>
     <div class="single-post">
       <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus felis, rutrum at mauris at, fermentum consectetur nisi. Vivamus semper molestie orci, at porta nisl mollis quis. Pellentesque ac risus magna. Ut scelerisque sapien pellentesque, venenatis turpis ac, posuere ipsum.
         Ut quis posuere ligula. Nam at porta mi. Donec sed suscipit metus. Nulla tincidunt dui at tortor gravida, at consequat justo congue.
          Nunc ultrices ac erat sit amet tincidunt.</p>
-      <button type="button" name="button" class="viewpost" onclick="window.location.href='{{ url_for('post')}}'">View Post</button>
+      <button type="button" name="button" class="viewpost">View Post</button>
    </div>
    <div class="single-post">
      <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
@@ -39,21 +53,18 @@
       Ut quis posuere ligula. Nam at porta mi. Donec sed suscipit metus. Nulla tincidunt dui at tortor gravida, at consequat justo congue.
        Nunc ultrices ac erat sit amet tincidunt.</p>
     <button type="button" name="button" class="viewpost">View Post</button>
- </div>
- <div class="single-post">
-   <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
-   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus felis, rutrum at mauris at, fermentum consectetur nisi. Vivamus semper molestie orci, at porta nisl mollis quis. Pellentesque ac risus magna. Ut scelerisque sapien pellentesque, venenatis turpis ac, posuere ipsum.
-     Ut quis posuere ligula. Nam at porta mi. Donec sed suscipit metus. Nulla tincidunt dui at tortor gravida, at consequat justo congue.
-      Nunc ultrices ac erat sit amet tincidunt.</p>
-   <button type="button" name="button" class="viewpost">View Post</button>
-</div>
-<div class="single-post">
-  <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus felis, rutrum at mauris at, fermentum consectetur nisi. Vivamus semper molestie orci, at porta nisl mollis quis. Pellentesque ac risus magna. Ut scelerisque sapien pellentesque, venenatis turpis ac, posuere ipsum.
-    Ut quis posuere ligula. Nam at porta mi. Donec sed suscipit metus. Nulla tincidunt dui at tortor gravida, at consequat justo congue.
-     Nunc ultrices ac erat sit amet tincidunt.</p>
-  <button type="button" name="button" class="viewpost">View Post</button>
-</div>
+  </div>
+  {% else %}
+  <ul>
+    {% for post in posts %}
+       <div class="single-post">
+         <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
+         <p> {{ post.content }}</p>
+        <button type="button" name="button" class="viewpost">View Post</button>
+       </div>
+    {% endfor %}
+  </ul>
+  {% endif %}
    <!--
   <div class="cards">
     <div class="card" style="width: 18rem;">
