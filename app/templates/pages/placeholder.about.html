@@ -11,4 +11,24 @@
 <p>Vivamus eu felis sed magna scelerisque semper in et libero. Curabitur sed convallis odio, quis venenatis sapien. In convallis a velit ac commodo. Donec sapien ligula, vestibulum ut nisi accumsan, facilisis pretium est. Fusce varius semper orci, et egestas nulla cursus a. Phasellus aliquam, mi ac adipiscing lobortis, ipsum augue aliquam ligula, quis fermentum mi augue vel ligula.</p>
 <p>Integer elementum malesuada dolor in aliquet.</p>
 
+<div class="">
+  <h2>Text posts:</h2>
+</div>
+{% for post in t_posts %}
+  <div class="">
+    <h3> {{post['post_id']}} </h3>
+    <p> {{post['content']}} </p>
+  </div>
+{% endfor %}
+
+<div class="">
+  <h2>Photo posts:</h2>
+</div>
+{% for post in p_posts %}
+<div class="">
+  <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
+  <h3> {{post['post_id']}} </h3>
+  <p> {{post['descrip']}} </p>
+</div>
+{% endfor%}
 {% endblock %}

@@ -6,6 +6,7 @@ from flask_login import UserMixin
 from app import db
 from sqlalchemy import bindparam
 from sqlalchemy.sql import text
+import datetime
 
 #engine = create_engine('sqlite:///database.db', echo=True)
 #db_session = scoped_session(sessionmaker(autocommit=False,
@@ -19,7 +20,7 @@ from sqlalchemy.sql import text
 class User(UserMixin):
     """docstring for User."""
 
-    def __init__(self, uid, lname, fname, email, uname=None, password=None, birth=None):
+    def __init__(self, lname, fname, email, uid=None, uname=None, password=None, birth=None):
         self.uid = uid
         self.username = uname
         self.firstname = fname
@@ -93,10 +94,10 @@ class User(UserMixin):
         return result.fetchone()
 
     def __repr__(self):
-        return '<User: %r>' %  self.firstname
+        return '<User: %r,%r,%r,%r,%r,%r>' % (self.firstname, self.lastname, self.username, self.DOB, self.email, self.password)
 
 
-class Profile(object):
+class Profile():
     """docstring for Profile: An object to store users information regarding their Profile
 
         """
@@ -254,7 +255,7 @@ class FrontUser(User):
 class Post():
     """docstring for Post."""
 
-    def __init__(self, uid, content, date, pid=None, comments=[], likes=0):
+    def __init__(self, uid, content, date, pid=None, likes=0, comments=[]):
 
         self.pid = pid
         self.uid = uid
@@ -285,6 +286,8 @@ class Post():
     def add_comment(self, pid, uid, comment, date):
         return comments.append(comment(pid,uid,comment,date))
 
+    def __repr__(self):
+        return '<PostID: %r>' %  self.pid
 
 class BlogGroup(object):
     """docstring for BlogGroup."""

@@ -2,7 +2,7 @@
 # Imports
 #----------------------------------------------------------------------------#
 from app import app, db, login_manager
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, g, url_for, flash, session
 from app.classes import *
 # from flask.ext.sqlalchemy import SQLAlchemy
 import logging
@@ -21,33 +21,36 @@ from datetime import date
 
 @app.route('/')
 def home():
-    return render_template('layouts/dash.html')
+    posts = None
+    user = 323493
+    posts = fetch_curr_usr_pst(user)
+    #print(results)
+    return render_template('layouts/dash.html', posts=posts, user=user)
+
 
 @app.route('/firstpage')
 def firstpage():
     return render_template('layouts/first.html')
 
 
+
 @app.route('/about')
 def about():
+    # userid = 323493
+    # postid = 1
+    # numPost = 0
+    # txtPost = []
+    # phPost = []
+    #
+    # fetch_curr_usr_pst(userid)
 
-    """with db.connect() as conn:
-        s = text("SELECT * FROM `usr`"
-        "WHERE u_id BETWEEN 100000 AND 200000")
-        result = conn.execute(s)
-        print(result.fetchmany(5))"""
+    #t_posts, p_posts=fetch_all_posts()
+    # print("Text posts \n")
+    # print(t_posts)
+    # print("Photo posts \n")
+    # print(p_posts)
 
-    with  db.connect() as connection:
-        nconn = connection.connection
-        cursor = nconn.cursor()
-        cursor.callproc("GetPostComments", ['1'])
-        results = list(cursor.fetchall())
-        cursor.close()
-        nconn.commit()
-
-    print(results)
-
-    return render_template('pages/placeholder.about.html')
+    return render_template('pages/placeholder.about.html', t_posts=t_posts, p_posts=p_posts)
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -56,27 +59,55 @@ def login():
     form = LoginForm()
 
     if request.method == 'POST':
-        if form.name.data:
-            email = form.name.data
+        print("Post requested")
+        if (request.form['email']):
+            email = request.form['email']
 
             print("Printing verification")
             print(verify_user(email))
             id, lname, fname, email, date, password = verify_user(email)
-            user = User(id, fname, lname)
+            user = User( lname, fname, email, uid=id)
             print(user)
 
             if user is not None:
                 login_user(user)
+                session['uid'] = user.uid
+                session['logged_in'] = True
+                print("Logged in")
+                g.current_user = user
                 flash('User logged in successfully!', 'success')
                 print("success!")
 
-            return redirect(url_for('about'))
+                return redirect(url_for('home'))
+        else:
+            print("No such usr")
+
     return render_template('forms/login.html', form=form)
 
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    session.pop('uid', None)
+    logout_user()
+    flash('You were logged out', 'success')
+    return redirect(url_for('home'))
 
-@app.route('/register')
+
+@app.route('/register', methods=["GET","POST"])
 def register():
-    form = RegisterForm(request.form)
+    form = RegisterForm()
+
+    if request.method == 'POST':
+        fname = request.form['firstname']
+        lname = request.form['lastname']
+        uname = request.form['username']
+        birth = request.form['DOB']
+        email = request.form['email']
+        password = request.form['password']
+
+        user = User(lname, fname, email, uname=uname, password=password, birth=birth)
+        print(user)
+
     return render_template('forms/register.html', form=form)
 
 
@@ -85,11 +116,30 @@ def forgot():
     form = ForgotForm(request.form)
     return render_template('forms/forgot.html', form=form)
 
-@app.route('/profile')
-def profile():
-    return render_template('layouts/profile.html')
 
-@app.route('/admin', methods=["GET"])
+@app.route('/profile/<user_id>', methods=['GET'])
+def profile(user_id):
+
+    empty = ''
+    print(user_id)
+    #userid = 323493
+
+    with db.connect() as conn:
+        stmt = text("SELECT fname, lname, email, dob, bio, u_name, num_of_friends FROM usr "
+                "JOIN register ON usr.u_id=register.u_id "
+                "JOIN prfl ON register.p_id=prfl.p_id "
+                "WHERE usr.u_id = :uid ")
+        stmt.bindparams(bindparam("uid", type_=str))
+        results = conn.execute(stmt, {"uid": user_id})
+
+        result = results.fetchone()
+
+    print(result)
+
+    return render_template('layouts/profile.html', result=result, posts=empty)
+
+
+@app.route('/admin', methods=["GET","POST"])
 def admin():
     usrttl = 0
     pstttl = 0
@@ -111,6 +161,7 @@ def admin():
         print(metric)
 
     return render_template('layouts/admin.html', metrics=metric)
+
 
 @app.route('/admin/<userName>', methods=["GET","POST"])
 def show_user(userName):
@@ -150,6 +201,75 @@ def group():
 
     #render the page with the selected post using the post id
 
+def fetch_all_posts():
+    txtPosts = []
+    phtPosts = []
+    pList = []
+
+    with db.connect() as conn:
+        t_stmt = text("SELECT p_text.*, datePosted FROM p_text "
+                "JOIN generates ON p_text.post_id=generates.post_id "
+                "ORDER BY datePosted "
+                "LIMIT 10 ")
+
+        p_stmt = text("SELECT photo.*, datePosted FROM photo "
+                "JOIN generates ON photo.post_id=generates.post_id "
+                "ORDER BY datePosted "
+                "LIMIT 10 ")
+
+        t_results = conn.execute(t_stmt)
+        p_results = conn.execute(p_stmt)
+        #print(results)
+
+        txtPost = t_results.fetchall()
+        phtPost = p_results.fetchall()
+
+        print(txtPost)
+
+
+    return (txtPost,phtPost)
+
+def fetch_curr_usr_pst(userid):
+
+    with db.connect() as conn:
+        stmt = text("SELECT post.post_id FROM usr "
+                "JOIN generates ON usr.u_id=generates.u_id "
+                "JOIN post ON generates.post_id=post.post_id "
+                "WHERE usr.u_id = :uid ")
+        stmt.bindparams(bindparam("uid", type_=str))
+        results = conn.execute(stmt, {"uid": userid})
+        numPost = len([result.values()[0] for result in results.fetchall()])
+        print(numPost)
+
+    if numPost == 0:
+        print("User has made no posts")
+    else:
+        with  db.connect() as connection:
+            nconn = connection.connection
+            cursor = nconn.cursor()
+            cursor.callproc("GetTextPosts", [userid])
+            t_results = cursor.fetchall()
+            cursor.close()
+            nconn.commit()
+        numPost -= len(t_results)
+
+        if numPost != 0:
+            with  db.connect() as connection:
+                nconn = connection.connection
+                cursor = nconn.cursor()
+                cursor.callproc("GetPhotoPosts", [userid])
+                p_results = cursor.fetchall()
+                cursor.close()
+                nconn.commit()
+            numPost -= len(p_results)
+
+        print(t_results)
+
+        posts = [Post(result[0], result[4], result[5], result[3], result[1]) for result in t_results]
+
+        print(posts)
+
+    return posts
 
 def verify_user(email, passw=None):
     print("verifying user..")
