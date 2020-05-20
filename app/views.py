@@ -113,6 +113,10 @@ def edit():
 def post():
     return render_template('layouts/post.html')
 
+@app.route('/groups')
+def group():
+    return render_template('layouts/group.html')
+
 
     #render the page with the selected post using the post id
 
