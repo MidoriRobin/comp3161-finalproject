@@ -19,12 +19,13 @@ from sqlalchemy.sql import text
 class User(UserMixin):
     """docstring for User."""
 
-    def __init__(self, uid, fname, lname, password=None, birth=None):
+    def __init__(self, uid, lname, fname, email, uname=None, password=None, birth=None):
         self.uid = uid
         self.username = uname
         self.firstname = fname
         self.lastname = lname
-        self.age = age
+        self.email = email
+        self.age = None
         self.DOB = birth
         self.password = password
 
