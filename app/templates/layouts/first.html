@@ -11,12 +11,12 @@
         <p>Share more with your friends and family!</p>
 
         <div class="btns">
-          <button type="button" name="button" class="signin-btn">Sign Up</button>
-          <button type="button" name="button" class="login-btn">Login</button>
+          <button onclick="window.location.href='{{ url_for('register') }}'" type="button" name="button" class="signin-btn">Sign Up</button>
+          <button onclick="window.location.href='{{ url_for('login') }}"type="button" name="button" class="login-btn">Login</button>
         </div>
 
         <div class="admin-sign">
-            <p>Admin? sign in <a href="#">here</a></p>
+            <p>Admin? sign in <a href="{{ url_for('admin') }}">here</a></p>
         </div>
     </div>
 </div>
