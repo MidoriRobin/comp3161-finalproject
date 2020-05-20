@@ -23,18 +23,15 @@ from datetime import date
 def home():
     posts = None
     user = 323493
-
-<<<<<<< HEAD
     posts = fetch_curr_usr_pst(user)
-=======
+    #print(results)
+    return render_template('layouts/dash.html', posts=posts, user=user)
+
+
 @app.route('/firstpage')
 def firstpage():
     return render_template('layouts/first.html')
 
->>>>>>> 72dcc200faf437d37e8a344413ca63ecd139bf4c
-
-    #print(results)
-    return render_template('layouts/dash.html', posts=posts, user=user)
 
 
 @app.route('/about')
