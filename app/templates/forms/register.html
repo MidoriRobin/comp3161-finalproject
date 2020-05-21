@@ -3,13 +3,16 @@
 {% block content %}
   <form method="post" class="form form-only-page">
     <h3 class="form-heading">Register <a href="{{ url_for('home') }}" title="Back to homepage"><i class="fa fa-home pull-right"></i></a></h3>
-    {{ form.username(class_ = 'form-control', placeholder = form.username.label.text, required = true) }}
     {{ form.firstname(class_ = 'form-control first-input', placeholder = form.firstname.label.text, required = true, autofocus = true) }}
     {{ form.lastname(class_ = 'form-control', placeholder = form.lastname.label.text, required = true) }}
     {{ form.DOB(class_ = 'form-control', placeholder = form.DOB.label.text, required = true) }}
     {{ form.email(class_ = 'form-control', placeholder = form.email.label.text, required = true) }}
     {{ form.password(class_ = 'form-control', placeholder = form.password.label.text, required = true) }}
     {{ form.confirm(class_ = 'form-control last-input', placeholder = form.confirm.label.text, required = true) }}
+    <h3 class="form-heading">Create Profile</h3>
+    {{ form.username(class_ = 'form-control', placeholder = form.username.label.text, required = true) }}
+    {{ form.bio(class_ = 'form-control', placeholder = form.bio.label.text, required = true) }}
+    {{ form.photo(class_ = 'form-control', placeholder = form.photo.label.text, required = false) }}
     <p class="pull-left"><a href="{{ url_for('login') }}">Login</a></p>
     <input type="submit" value="Register" class="btn btn-primary btn-lg btn-block">
     <!--p>You must add database as well as Flask-Login to enable user management. See the <a href="http://www.realpython.com">Real Python</a> course for more info!</p>

@@ -73,7 +73,12 @@
           <th>Friends</th>
         </tr>
       </table>
+      {% if userid == session['uid'] %}
+      <button type="button" onclick="window.location.href='{{ url_for('edit', user_id= 0) }}'"
+      name="button" class="follow">Edit Profile</button>
+      {% else %}
       <button type="button" name="button" class="follow">Add friend</button>
+      {% endif %}
     </div>
 </div>
 
@@ -100,7 +105,7 @@
    <div class="post">
      <div class="single-post">
        <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
-       <p>{{post['content']}}<span><a href="#">View Comments</a></span></p>
+       <p>{{post['descrip']}}<span><a href="#">View Comments</a></span></p>
        <button type="button" name="button" class="viewpost">View Post</button>
        <hr>
      </div>

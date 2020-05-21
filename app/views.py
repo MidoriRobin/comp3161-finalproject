@@ -18,20 +18,21 @@ from datetime import date
 # Controllers.
 #----------------------------------------------------------------------------#
 
-
 @app.route('/')
 def home():
-    posts = None
-    user = 323493
-    posts = fetch_curr_usr_pst(user)
-    #print(results)
-    return render_template('layouts/dash.html', posts=posts, user=user)
 
-
-@app.route('/firstpage')
-def firstpage():
     return render_template('layouts/first.html')
 
+
+@app.route('/dash', methods=['GET',"POST"])
+def dash():
+    posts = None
+    user = session['uid']
+    posts = fetch_curr_usr_pst(user)
+    if (posts == []):
+        flash('You havent made a post yet')
+
+    return render_template('layouts/dash.html', posts=posts, user=user)
 
 
 @app.route('/about')
@@ -44,11 +45,11 @@ def about():
     #
     # fetch_curr_usr_pst(userid)
 
-    #t_posts, p_posts=fetch_all_posts()
-    # print("Text posts \n")
-    # print(t_posts)
-    # print("Photo posts \n")
-    # print(p_posts)
+    t_posts, p_posts=fetch_all_posts()
+    print("Text posts \n")
+    print(t_posts)
+    print("Photo posts \n")
+    print(p_posts)
 
     return render_template('pages/placeholder.about.html', t_posts=t_posts, p_posts=p_posts)
 
@@ -78,7 +79,7 @@ def login():
                 flash('User logged in successfully!', 'success')
                 print("success!")
 
-                return redirect(url_for('home'))
+                return redirect(url_for('dash'))
         else:
             print("No such usr")
 
@@ -105,8 +106,16 @@ def register():
         email = request.form['email']
         password = request.form['password']
 
+        uname = request.form['username']
+        bio = request.form['bio']
+
+
+
         user = User(lname, fname, email, uname=uname, password=password, birth=birth)
         print(user)
+        resutl = insert_usr(fname, lname, birth, email, password, uname, bio)
+
+        return redirect(url_for('home'))
 
     return render_template('forms/register.html', form=form)
 
@@ -135,8 +144,9 @@ def profile(user_id):
         result = results.fetchone()
 
     print(result)
+    t_posts, p_posts=fetch_all_posts()
 
-    return render_template('layouts/profile.html', result=result, posts=empty)
+    return render_template('layouts/profile.html', userid=int(user_id),result=result, posts=p_posts)
 
 
 @app.route('/admin', methods=["GET","POST"])
@@ -186,13 +196,99 @@ def show_user(userName):
     return render_template('layouts/admin-user.html', Users=users)
 
 
-@app.route('/edit')
-def edit():
+@app.route('/edit/<user_id>', methods=["GET", "POST"])
+def edit(user_id):
+
+    if user_id == 0:
+        user_id = session['uid']
+
+    # UPDATE Customers
+    # SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
+    # WHERE CustomerID = 1;
+
     return render_template('layouts/editprofile.html')
 
-@app.route('/post')
-def post():
-    return render_template('layouts/post.html')
+@app.route('/added/<usr>')
+def add_friend(usr):
+
+    with db.connect() as conn:
+        stmt = text("INSERT INTO friend (session['uid'], usr, session['uid']) "
+                "VALUES (:uid, :fid, :pid) "
+                )
+        stmt.bindparams(
+            bindparam("uid", type_=str),
+            bindparam("fid", type_=str),
+            bindparam("pid", type_=str)
+            )
+        conn.execute(stmt, {"uid": session['uid'], "fid": usr, "pid": session['uid']})
+    flash('Friend added!')
+    return redirect(url_for('dash'))
+
+@app.route('/post/<post_id>', methods=["GET","POST"])
+def post(post_id):
+    post = ''
+
+    with db.connect() as conn:
+        stmt = text("SELECT p_text.*, u_name FROM p_text "
+                "JOIN generates ON p_text.post_id=generates.post_id "
+                "JOIN usr ON generates.u_id=usr.u_id "
+                "JOIN register ON usr.u_id=register.u_id "
+                "JOIN prfl ON register.p_id=prfl.p_id "
+                "WHERE p_text.post_id = :postid ")
+        stmt.bindparams(bindparam("postid", type_=str))
+        results = conn.execute(stmt, {"postid": post_id})
+
+        post = results.fetchone()
+    print(post)
+
+    if(post == None):
+        with db.connect() as conn:
+            stmt = text("SELECT photo.*, prfl.u_name FROM photo "
+                    "JOIN generates ON photo.post_id=generates.post_id "
+                    "JOIN usr ON generates.u_id=usr.u_id "
+                    "JOIN register ON usr.u_id=register.u_id "
+                    "JOIN prfl ON register.p_id=prfl.p_id "
+                    "WHERE photo.post_id = :postid ")
+
+            stmt.bindparams(bindparam("postid", type_=str))
+            results = conn.execute(stmt, {"postid": post_id})
+
+            post = results.fetchone()
+
+    print(post['content'])
+    #getting comments
+    with db.connect() as conn:
+        stmt = text("SELECT comment_on.*, u_name FROM comment_on "
+                "JOIN usr ON comment_on.u_id=usr.u_id "
+                "JOIN register ON usr.u_id=register.u_id "
+                "JOIN prfl ON register.p_id=prfl.p_id "
+                "WHERE post_id = :postid ")
+        stmt.bindparams(bindparam("postid", type_=str))
+        results = conn.execute(stmt, {"postid": post_id})
+
+        com_results = results.fetchall()
+
+    if request.method == 'POST':
+        content = request.form['make-comment']
+        uid = session['uid']
+        dateMade = date.today()
+
+        with db.connect() as conn:
+            stmt = text("INSERT INTO comment_on (post_id, u_id, content, dateMade) "
+                    "VALUES (:postid, :uid, :content, :date) "
+                    )
+            stmt.bindparams(
+                bindparam("postid", type_=str),
+                bindparam("uid", type_=str),
+                bindparam("content", type_=str),
+                bindparam("date", type_=str),
+                )
+            conn.execute(stmt, {"postid": post_id, "uid": uid, "content": content, "date": dateMade})
+
+        flash('You made a comment on this post')
+        return redirect(url_for('post', post_id=post_id))
+
+    return render_template('layouts/post.html', post=post, comments=com_results)
 
 @app.route('/groups')
 def group():
@@ -200,6 +296,16 @@ def group():
 
 
     #render the page with the selected post using the post id
+# def add_usr_db():
+#
+#     with db.connect() as conn:
+#         stmt = text("INSERT INTO usr (column1, column2, column3, ...) "
+#                 "VALUES (value1, value2, value3, ...) "
+#                 "JOIN post ON generates.post_id=post.post_id "
+#                 "WHERE usr.u_id = :uid ")
+#         stmt.bindparams(bindparam("uid", type_=str))
+#         results = conn.execute(stmt, {"uid": userid})
+#     pass
 
 def fetch_all_posts():
     txtPosts = []
@@ -230,6 +336,7 @@ def fetch_all_posts():
     return (txtPost,phtPost)
 
 def fetch_curr_usr_pst(userid):
+    posts = []
 
     with db.connect() as conn:
         stmt = text("SELECT post.post_id FROM usr "
@@ -295,6 +402,39 @@ def verify_user(email, passw=None):
     print("verification complete!")
     #print("Result is: %s", result.fetchone())
     return result.fetchone()
+
+def insert_usr(fname, lname, dob, email, pword, uname, bio):
+    p_pic = ''
+
+    with db.connect() as conn:
+        stmt = text("INSERT INTO usr (lname, fname, email, dob, pword) "
+                "VALUES (:lname, :fname, :email, :dob, :pword) "
+                )
+        stmt.bindparams(
+            bindparam("lname", type_=str),
+            bindparam("fname", type_=str),
+            bindparam("email", type_=str),
+            bindparam("dob", type_=str),
+            bindparam("pword", type_=str)
+            )
+        conn.execute(stmt, {"lname": lname, "fname": fname, "email": email, "dob": dob, "pword": pword})
+
+    with db.connect() as conn:
+        stmt = text("INSERT INTO prfl (p_pic, bio, u_name) "
+                "VALUES (:pfile, :bio, :u_name) "
+                )
+        stmt.bindparams(
+            bindparam("pfile", type_=str),
+            bindparam("bio", type_=str),
+            bindparam("u_name", type_=str)
+            )
+
+        conn.execute(stmt,{"u_name": uname, "pfile": 'None.jpg', "bio": bio})
+
+    flash("You have registered successfully")
+    print("user has been successfully inserted")
+
+    return True
 
 @login_manager.user_loader
 def load_user(user_id):

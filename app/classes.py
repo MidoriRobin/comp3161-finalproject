@@ -286,6 +286,15 @@ class Post():
     def add_comment(self, pid, uid, comment, date):
         return comments.append(comment(pid,uid,comment,date))
 
+    def type(self, arg):
+
+        if pid == None:
+            Type = "Photo"
+        else:
+            Type = "Text"
+
+        return Type
+            
     def __repr__(self):
         return '<PostID: %r>' %  self.pid
 

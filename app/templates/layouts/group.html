@@ -1,35 +1,85 @@
 {% extends 'layouts/main.html' %}
 
 {% block content %}
-<!-- to display groups-->
-<!-- should we -->
-<div class="group">
-  <!-- display the content editors and the list of members-->
-  <div class="user-sidebar">
-    <div class="content-editors">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<title>Group\A</title>
+	<style>
+	#para{
+		padding-top: 50px;
+	}
 
-    </div>
-    <div class="Members Joined"> <!-- These members are all users who add themselfves to the groups-->
+	#com{
+		text-align: center;
+		padding-bottom: 15px;
+		font-style: italic;
+	}
 
-    </div>
-  </div>
-  <!-- the main group and post -->
-  <div class="group-main">
-    <div class="group-name">
-      <h4>Group name</h4>
-    </div>
-    <div class="group-post">
-      <p>content editor name</p> <!-- content editor name to be displayed here -->
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus felis, rutrum at mauris at, fermentum consectetur nisi. Vivamus semper molestie orci, at porta nisl mollis quis. Pellentesque ac risus magna. Ut scelerisque sapien pellentesque, venenatis turpis ac, posuere ipsum.
-        Ut quis posuere ligula. Nam at porta mi. Donec sed suscipit metus</p> <!--post made by the group-->
-      <a href="#"><span>view comments</span></a>
-  </div>
-</div>
+	#grp{
+		text-align: center;
+		font-size: 70px;
+	}
+
+ 	#im{
+ 		padding-top: 30px;
+ 	}
+
+ 	img{
+ 		padding-right: 10px;
+ 	}
+
+	</style>
+</head>
+<body>
+	<br>
+	<br>
+	<hr style="height:3px;border-width:0;color:lightseagreen;background-color:lightseagreen">
+	<h1 id="grp">Group: A </h1>
+	<div class="container">
+    	<div class="form-group">
+    		<div id="para"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet</div>
+    		<div style="font-style: italic;"> Posted: 2020-04-15 13:17:17</div>
+    		<div style="font-style: italic;"> By: Damian</div>
+    		<div id="com">Comment</div>
+      		<textarea class="form-control" rows="5" id="comment" name="text" placeholder="Comment"></textarea>
+      		<button type="submit" class="btn btn-primary">Post Comment</button>
+      		<br>
+			<div id="im"> <img src="images.png"> Octavius: Nulla tincidunt, neque vitae semper egestas, urna justo</div>
+   		 </div>
+ 	</div>
+	<hr style="height:3px;width:1100px;border-width:0;color:lightseagreen;background-color:lightseagreen">
+
+	<div class="container">
+    	<div class="form-group">
+    		<div id="para"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus </div>
+    			<div style="font-style: italic;"> Posted on: 2020-12-24 22:39:53</div>
+    			<div style="font-style: italic;"> By: Declan </div>
+    		<div id="com">Comment</div>
+      		<textarea class="form-control" rows="5" id="comment" name="text" placeholder="Comment"></textarea>
+      		<button type="submit" class="btn btn-primary">Post Comment</button>
+      		<br>
+			<div id="im"> <img src="images.png">Jenette: Cras lorem lorem, luctus ut, pellentesque</div>
+   		 </div>
+ 	</div>
+	<hr style="height:3px;width:1100px;border-width:0;color:lightseagreen;background-color:lightseagreen">
 
 
+	<div class="container">
+    	<div class="form-group">
+    		<div id="para"> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec</div>
+    		<div style="font-style: italic;"> Posted on: 2020-12-29 09:51:46 </div>
+    		<div style="font-style: italic;"> By: Trevor</div>
+    		<div id="com">Comment</div>
+      		<textarea class="form-control" rows="5" id="comment" name="text" placeholder="Comment"></textarea>
+      		<button type="submit" class="btn btn-primary">Post Comment</button>
+      		<br>
+			<div id="im"> <img src="images.png">Remedios: montes, nascetur ridiculus mus. Proin</div>
+   		 </div>
+ 	</div>
+	<hr style="height:3px;width:1100px;border-width:0;color:lightseagreen;background-color:lightseagreen">
 
 
-
-
-
-{% endblock%}
+{% endblock %}

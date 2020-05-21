@@ -14,7 +14,7 @@
       <textarea class="accept-post" name="make-a-post" placeholder="What's on your mind..."></textarea>
       <button type="submit" name="button" class="add-post">Add Post</button>
 
-    {% if posts == '' %}
+    {% if posts == [] %}
     <!-- single post to go here -->
     <hr>
     <h4 class="head">Recents</h4>
@@ -60,7 +60,8 @@
        <div class="single-post">
          <img src="https://via.placeholder.com/150" class="card-img-top" alt="profile photo placeholder">
          <p> {{ post.content }}</p>
-        <button type="button" name="button" class="viewpost">View Post</button>
+        <button type="button" onclick="window.location.href='{{ url_for('post', post_id=post.pid) }}'" 
+        name="button" class="viewpost">View Post</button>
        </div>
     {% endfor %}
   </ul>
